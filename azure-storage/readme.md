@@ -1,7 +1,7 @@
 # Azure Storage
 A sample project showing how to upload files to Azure Storage using 2 methods
 - **Directly from a local folder on your machine**  
-I've included a sample "data" folder containing 10 csv files conatining the MSFT stock price history for a specific date.
+I've included a sample "data" folder containing 10 csv files with the MSFT stock price history for a specific date.
 
 - **Copied from a web-accessible URL**  
 (this is useful if you're trying to transfer files between a web location and Azure storage - you don't need to download the files and then upload to Azure - Azure Storage can get the file directly from the source)  
