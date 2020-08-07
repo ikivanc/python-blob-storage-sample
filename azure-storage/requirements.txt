@@ -1,0 +1,3 @@
+python-dotenv
+requests
+azure-storage-blob==2.1.0
