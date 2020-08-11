@@ -18,8 +18,7 @@ I used Python 3.6.8 for this, but it should be fine on other 3.x versions as wel
 This contains the environment variables that you need to set for your Azure Storage account
 
 3. Set each of the variables in the .env file:  
-`STORAGE_ACCOUNT_NAME`  
-`STORAGE_KEY`  
+`STORAGE_CONNECTION_STRING`  
 `STORAGE_CONTAINER`
 
 4. Install the dependencies  
