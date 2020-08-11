@@ -1,8 +1,6 @@
 from azure.storage.blob import BlobClient
 from dotenv import load_dotenv
 import os
-import json
-from urllib.parse import urlparse
 import requests
 
 def list_files() -> []:
@@ -11,14 +9,12 @@ def list_files() -> []:
     for root, dirs, files in os.walk("data"):
         for name in files:
             file_list.append({"file_name": name, "local_path": os.path.join(root,name)})
-    
+
     return file_list
 
 def get_filename_from_url(url: str) -> str:
     file_name=url.split('/')[-1]
-    
     return file_name
-
 
 def get_random_images() -> []:
     # helper function uses loremflickr.com to get a random list of images 
@@ -38,7 +34,7 @@ def create_blob_from_url(storage_connection_string,container_name):
     for u in url_list:
         print(f"copying file: {u} to blob storage...")
 
-        # Download file from url to push as blob
+        # Download file from url then upload blob file
         r = requests.get(u, stream = True)
         if r.status_code == 200:
             r.raw.decode_content = True
@@ -48,8 +44,8 @@ def create_blob_from_url(storage_connection_string,container_name):
 def create_blob_from_path(storage_connection_string,container_name):
     for f in list_files():
         print(f"uploading local file: {f} to blob storage...")
-        block_blob_service = BlobClient.from_connection_string(conn_str=storage_connection_string, container_name=container_name, blob_name=f["file_name"])
         with open(f["local_path"], "rb") as data:
+            block_blob_service = BlobClient.from_connection_string(conn_str=storage_connection_string, container_name=container_name, blob_name=f["file_name"])
             block_blob_service.upload_blob(data,overwrite=True)
 
 if __name__ == '__main__':
