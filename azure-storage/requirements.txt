@@ -1,3 +1,4 @@
 python-dotenv
 requests
 azure-storage-blob==12.3.2
+aiohttp

@@ -1,4 +1,4 @@
-from azure.storage.blob import BlobClient
+from azure.storage.blob import BlobClient, BlobServiceClient
 from dotenv import load_dotenv
 import os
 import requests
@@ -31,22 +31,29 @@ def create_blob_from_url(storage_connection_string,container_name):
     # urls to fetch into blob storage
     url_list = get_random_images()
 
+    # Instantiate a new BlobServiceClient and a new ContainerClient
+    blob_service_client = BlobServiceClient.from_connection_string(storage_connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
+
     for u in url_list:
         print(f"copying file: {u} to blob storage...")
-
         # Download file from url then upload blob file
         r = requests.get(u, stream = True)
         if r.status_code == 200:
             r.raw.decode_content = True
-            block_blob_service = BlobClient.from_connection_string(conn_str=storage_connection_string, container_name=container_name, blob_name=get_filename_from_url(u))
-            block_blob_service.upload_blob(r.raw,overwrite=True)
+            blob_client = container_client.get_blob_client(get_filename_from_url(u))
+            blob_client.upload_blob(r.raw,overwrite=True)
 
 def create_blob_from_path(storage_connection_string,container_name):
+    # Instantiate a new BlobServiceClient and a new ContainerClient
+    blob_service_client = BlobServiceClient.from_connection_string(storage_connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
+
     for f in list_files():
         print(f"uploading local file: {f} to blob storage...")
         with open(f["local_path"], "rb") as data:
-            block_blob_service = BlobClient.from_connection_string(conn_str=storage_connection_string, container_name=container_name, blob_name=f["file_name"])
-            block_blob_service.upload_blob(data,overwrite=True)
+            blob_client = container_client.get_blob_client(f["file_name"])
+            blob_client.upload_blob(data,overwrite=True)
 
 if __name__ == '__main__':
 
