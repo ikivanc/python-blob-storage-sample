@@ -24,7 +24,7 @@ This contains the environment variables that you need to set for your Azure Stor
 4. Install the dependencies  
 `pip install -r requirements.txt`
 
-5. Comment/uncomment the call to the function that you want to test:
+5. Comment/uncomment the call to the function that you want to test in `azure_storage_v12_3_2.py`:
 ```
 # if you want to copy from a public url
 create_blob_from_url(block_blob_service)
@@ -36,4 +36,8 @@ create_blob_from_url(block_blob_service)
 6. Run the project!
 
 
+If you would like to test more samples
+* For version v2.1.0 old SDK, you can check the sample `azure_storage_v2_1_0.py`.
+* Async sample implementation , you can check the sample `azure_storage_async.py`
 
+Thanks!
