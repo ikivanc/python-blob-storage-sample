@@ -45,7 +45,7 @@ class BlobSamplesAsync(object):
             try:
                 # Create new container in the service
                 await container_client.create_container()
-                print("container is created")
+                print('container is created')
                 
                 # List containers in the storage account
                 my_containers = []
@@ -55,6 +55,7 @@ class BlobSamplesAsync(object):
             finally:
                 # Delete the container
                 await container_client.delete_container()
+                print('container is deleted')
 
     async def block_blob_sample_async(self):
         # Instantiate a new BlobServiceClient using a connection string
@@ -68,7 +69,7 @@ class BlobSamplesAsync(object):
             try:
                 # Create new Container in the service
                 await container_client.create_container()
-                print("container is created")
+                print('container is created')
 
                 # Instantiate a new BlobClient
                 blob_client = container_client.get_blob_client("myblockblob")
@@ -77,7 +78,7 @@ class BlobSamplesAsync(object):
                 # Upload content to block blob
                 with open(SOURCE_FILE, "rb") as data:
                     await blob_client.upload_blob(data, blob_type="BlockBlob")
-                    print("done! blob is uploaded")
+                    print('done! blob is uploaded')
                 # [END upload_a_blob]
 
                 # [START download_a_blob]
@@ -85,7 +86,7 @@ class BlobSamplesAsync(object):
                     stream = await blob_client.download_blob()
                     data = await stream.readall()
                     my_blob.write(data)
-                    print("done! blob is downloaded")
+                    print('done! blob is downloaded')
                 # [END download_a_blob]
 
                 # [START delete_blob]
@@ -95,7 +96,7 @@ class BlobSamplesAsync(object):
             finally:
                 # Delete the container
                 await container_client.delete_container()
-                print("container is deleted")
+                print('container is deleted')
 
     async def page_blob_sample_async(self):
         # Instantiate a new BlobServiceClient using a connection string
@@ -109,7 +110,7 @@ class BlobSamplesAsync(object):
             try:
                 # Create new Container in the Service
                 await container_client.create_container()
-                print("container is created")
+                print('container is created')
 
                 # Instantiate a new BlobClient
                 blob_client = container_client.get_blob_client("mypageblob")
@@ -126,12 +127,12 @@ class BlobSamplesAsync(object):
 
                 # Delete Page Blob
                 await blob_client.delete_blob()
-                print("done! blob is deleted")
+                print('done! blob is deleted')
 
             finally:
                 # Delete container
                 await container_client.delete_container()
-                print("container is deleted")
+                print('container is deleted')
 
     async def append_blob_sample_async(self):
         # Instantiate a new BlobServiceClient using a connection string
@@ -145,7 +146,7 @@ class BlobSamplesAsync(object):
             try:
                 # Create new Container in the Service
                 await container_client.create_container()
-                print("container is created")
+                print('container is created')
 
                 # Get the BlobClient
                 blob_client = container_client.get_blob_client("myappendblob")
@@ -153,6 +154,7 @@ class BlobSamplesAsync(object):
                 # Upload content to the append blob
                 with open(SOURCE_FILE, "rb") as data:
                     await blob_client.upload_blob(data, blob_type="AppendBlob")
+                    print('done! blob is appended')
 
                 # Download append blob
                 with open(DEST_FILE, "wb") as my_blob:
@@ -162,10 +164,12 @@ class BlobSamplesAsync(object):
 
                 # Delete append blob
                 await blob_client.delete_blob()
+                print('done! blob is deleted')
 
             finally:
                 # Delete container
                 await container_client.delete_container()
+                print('container is deleted')
 
 async def main():
     sample = BlobSamplesAsync()
