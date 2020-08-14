@@ -3,6 +3,7 @@
 ## Install Dependencies
 
 ```
+pip install python-dotenv
 pip install opencensus
 pip install opencensus-ext-logging
 pip install opencensus-ext-azure
