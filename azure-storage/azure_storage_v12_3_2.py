@@ -55,6 +55,17 @@ def create_blob_from_path(storage_connection_string,container_name):
             blob_client = container_client.get_blob_client(f["file_name"])
             blob_client.upload_blob(data,overwrite=True)
 
+def download_blob_from_file_name(storage_connection_string,container_name,file_name):
+    # Instantiate a new BlobServiceClient and a new ContainerClient
+    blob_service_client = BlobServiceClient.from_connection_string(storage_connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
+    blob_client = container_client.get_blob_client(file_name)
+
+    # download file into data folder
+    with open("./data/"+file_name, "wb") as my_blob:
+        blob_data = blob_client.download_blob()
+        blob_data.readinto(my_blob)
+
 if __name__ == '__main__':
 
     # load en vars
@@ -63,10 +74,13 @@ if __name__ == '__main__':
     storage_connection_string = os.environ["STORAGE_CONNECTION_STRING"]
     container_name = os.environ["STORAGE_CONTAINER"]
 
-    # if you want to copy from a public url
-    #create_blob_from_url(storage_connection_string,container_name)
+    # # if you want to copy from a public url
+    # create_blob_from_url(storage_connection_string,container_name)
     
     # OR if you want to upload form your local drive
-    create_blob_from_path(storage_connection_string,container_name)
+    #create_blob_from_path(storage_connection_string,container_name)
+
+    # test sample with a sample data file to download blob storage
+    download_blob_from_file_name(storage_connection_string,container_name,"stock-MSFT-2020-09-03.csv")
 
     print("done!")

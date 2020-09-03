@@ -130,3 +130,6 @@ dmypy.json
 
 # VSCode
 .vscode
+
+#opencensus test
+opencensus/opencensus_test.py
